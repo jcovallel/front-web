@@ -6,10 +6,13 @@
   justify-content: center;
   font-size: calc(2px + 2vmin);
   color: white;
+  margin-bottom: 0;
 }
 
 .Homee {
-  background-color: #eaeaea;
+  background: #282c34;
+  text-decoration-color: white;
+  text-emphasis-color: white;
   min-height: 100vh;
   display: block;
   flex-direction: column;
@@ -25,5 +28,5 @@
 }
 
 .Background{
-  background-color: #eaeaea;
+  background-color: #282c34;
 }
