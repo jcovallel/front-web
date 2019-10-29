@@ -2,7 +2,7 @@
 /* eslint react/prop-types: 0 */
 import React, {Component} from 'react';
 import './All.css';
-import './Login.css'
+import './Login.css';
 import axios from 'axios';
 import {connect} from "react-redux"
 import {saveuser} from "../Redux/ActionCreators";
@@ -12,13 +12,13 @@ import gql from "graphql-tag";
 
 class Home extends Component {
 
-    constructor(props){
-        super(props);
-        this.state = {
-            username: null,
-            password: null
-        };
-    }
+        constructor(props){
+            super(props);
+            this.state = {
+                username: null,
+                password: null
+            };
+        }
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -51,12 +51,17 @@ class Home extends Component {
             url: "http://192.168.0.17:4002/users/findByUsername?username=" + this.state.username,
         }).then(res=>{
             console.log(res.data);
+            this.props.saveuser(res.data);
         });
         axios({
             method: "GET",
             url: "http://192.168.0.17:3000/api/signin/" + this.state.username + "/" + this.state.password,
         }).then(res=>{
             console.log(res);
+            this.props.history.push('/chats');
+        }).catch(res =>{
+            console.log(res);
+            this.props.history.push('/register');
         });
     }
 
@@ -73,6 +78,7 @@ class Home extends Component {
             password: e.target.value
         })
     }
+
     render(){
         return(
             <div className="App">
@@ -96,8 +102,7 @@ class Home extends Component {
                             <input  type="submit" className="btn btn-lg btn-primary btn-block" value="Sign In" onClick={this.handleSubmit}/>
                         </div>
                         <span className="forgot-pass">
-                            <a className="btn btn-link pull-right">Forgot Password?</a>
-                            <a className="btn btn-link pull-right">Don't have an account? Sign up</a>
+                            <a href={"/register"} className="btn btn-link pull-right">Don't have an account? Sign up</a>
                         </span>
                         </fieldset>
                     </form>
@@ -124,7 +129,9 @@ const mapStateToProps = () =>{
 
 const mapDispatchToProps = dispatch =>{
     return{
-        
+        saveuser(user){
+            dispatch(saveuser(user))
+        }
     };
 };
 
