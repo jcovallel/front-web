@@ -2,10 +2,6 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {connect} from "react-redux"
 import {deleteuser, deleteusername, saveuser2} from "../Redux/ActionCreators";
-import { print } from "graphql";
-import gql from "graphql-tag";
-import Card from "react-bootstrap/Card";
-import Container from "react-bootstrap/Container"
 import UserCard from './UserCard';
 import Button from "react-bootstrap/Button";
 import ButtonToolbar from "react-bootstrap/ButtonToolbar";
@@ -35,7 +31,7 @@ class Chats extends Component {
             url: "http://localhost:4002/users/index",
             method: "GET",
         }).then(res =>{
-            console.log(res.data);
+            console.log(res);
             this.setState({
                 users: res.data
             })
@@ -53,7 +49,7 @@ class Chats extends Component {
         e.preventDefault();
         axios({
             method: "GET",
-            url: "http://localhost:4002/users/"+e.target.id,
+            url: "http://172.17.0.1:4002/users/"+e.target.id,
         }).then(res=>{
             console.log(res.data);
             this.props.saveuser2(res.data);

@@ -48,14 +48,14 @@ class Home extends Component {
         });
         axios({
             method: "GET",
-            url: "http://192.168.0.17:4002/users/findByUsername?username=" + this.state.username,
+            url: "http://172.17.0.1:4002/users/findByUsername?username=" + this.state.username,
         }).then(res=>{
             console.log(res.data);
             this.props.saveuser(res.data);
         });
         axios({
             method: "GET",
-            url: "http://192.168.0.17:3000/api/signin/" + this.state.username + "/" + this.state.password,
+            url: "http://172.17.0.1:3000/api/signin/" + this.state.username + "/" + this.state.password,
         }).then(res=>{
             console.log(res);
             this.props.history.push('/chats');

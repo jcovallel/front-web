@@ -84,7 +84,7 @@ class Register extends Component {
         });
         axios({
             method: "POST",
-            url: "http://192.168.0.17:3000/signup/" + this.state.username + "/" + this.state.password
+            url: "http://172.17.0.1:3000/signup/" + this.state.username + "/" + this.state.password
         }).then(res=>{
             console.log("yea maracuyea"+res.data)
             this.props.history.push('/chats');
@@ -113,7 +113,8 @@ class Register extends Component {
                                 <input type="password" name="password" id="password" className="form-control input-lg" placeholder="Please enter a password" onChange={this.handlePasswordChange}/>
                             </div>
                             <div className="row" style={{marginLeft: '30%',marginRight: '30%', marginTop:'30px'}}>
-                                <input onClick={this.handleSubmit} type="submit" className="btn btn-lg btn-primary btn-block" value="Sign Up"/>
+                                <input onClick={this.handleSubmit} type="submit" className="bthis.state.username,
+                password: this.state.passwordtn btn-lg btn-primary btn-block" value="Sign Up"/>
                             </div>
                         </fieldset>
                     </div>
