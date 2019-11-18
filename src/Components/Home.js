@@ -37,7 +37,7 @@ class Home extends Component {
       `;
         axios({
             method: "POST",
-            url: "http://localhost:5000/graphql",
+            url: "http://54.39.98.125:5000/graphql",
             data: {
               query: print(LOG_USER_AUTH),
               variables: {
@@ -48,17 +48,17 @@ class Home extends Component {
         });
         axios({
             method: "GET",
-            url: "http://172.17.0.1:4002/users/findByUsername?username=" + this.state.username,
+            url: "http://54.39.98.125:4002/users/findByUsername?username=" + this.state.username,
         }).then(res=>{
             console.log(res.data);
             this.props.saveuser(res.data);
         });
         axios({
             method: "GET",
-            url: "http://172.17.0.1:3000/api/signin/" + this.state.username + "/" + this.state.password,
+            url: "http://54.39.98.125:3000/api/signin/" + this.state.username + "/" + this.state.password,
         }).then(res=>{
             console.log(res);
-            this.props.history.push('/chats');
+            this.props.history.push('/chatroom');
         }).catch(res =>{
             console.log(res);
             this.props.history.push('/register');
