@@ -22,4 +22,12 @@ const deleteuser2 = () => {
     return {type: "DELETEUSER2"}
 };
 
-export {saveuser, deleteuser, saveusername, deleteusername, saveuser2, deleteuser2};
+const savejwt = (jwt) => {
+    return {type: "SAVEJWT", jwt}
+};
+
+const deletejwt = () => {
+    return {type: "DELETEJWT"}
+}
+
+export {saveuser, deleteuser, saveusername, deleteusername, saveuser2, deleteuser2, savejwt, deletejwt};

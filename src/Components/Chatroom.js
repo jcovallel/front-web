@@ -18,36 +18,38 @@ class Chatroom extends Component {
     }
 
     componentDidMount() {
-        // For first render, it's not go through componentWillReceiveProps
+        if(this.props.jwt===""){
+            this.props.history.push('/home');
+        }
         this.getMessages();
     }
 
-    componentWillUnmount() {
+    getMessages = async () => {
         if (this.removeListener) {
             this.removeListener()
         }
-    }
-
-     getMessages = async () => {
-        if (this.removeListener) {
-            this.removeListener()
-        }
+        var listMessage = []
         this.removeListener = myFirestore.collection('chat').orderBy('date').onSnapshot(
             snapshot =>{
                 snapshot.docChanges().forEach(change => {
                     if(change.type === "added"){
-                        this.listMessage.push(change.doc.data().text);
+                        listMessage.push(change.doc.data().text);
                         // eslint-disable-next-line no-useless-concat
-                        console.log("Remitente: " + change.doc.data().from +  "  " + "Mensaje: "+change.doc.data().text);
+                        console.log(change.doc.data().text);
+                        this.renderMessages(listMessage);
                     } 
                 })
             }
         );
+        
         this.renderMessages();
     }
 
-    renderMessages= async () => {
-        await this.getMessages;
+    renderMessages(listMessage){
+        //console.log(listMessage)
+        this.setState({
+            listMessage: listMessage
+        })
         //console.log(this.listMessage)
     }
 
@@ -62,6 +64,11 @@ class Chatroom extends Component {
         console.log(todayDate3);
     }
 
+    debug = (e) => {
+        console.log(this.props.user.mail)
+        console.log(this.state.listMessage)
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
         var todayDate = new Date().toISOString().slice(0,10);
@@ -72,14 +79,12 @@ class Chatroom extends Component {
         const CREATE_CHAT_MSG = gql`
         mutation createChat(
           $emisor: Int!
-          $receptor: Int!
           $mensaje: String!
           $fecha: String!
         ) {
           createChat(
             Chat: {
                 emisor: $emisor
-                receptor: $receptor
                 mensaje: $mensaje
                 fecha: $fecha
             }
@@ -88,26 +93,55 @@ class Chatroom extends Component {
           }
         }
       `;
+        const CREATE_NOTIFICATION = gql`
+        mutation createNotification(
+            $message: String!
+            $sender_id: Int!
+            $chat_id: Int!
+            $users: [Int!]
+        ){
+            createNotification(
+                notification: {
+                    message: $message
+                    sender_id: $sender_id
+                    chat_id: $chat_id
+                    users: $users
+                }
+            ){
+                message
+            }
+        }
+        `
     axios({
         method: "POST",
-        url: "http://localhost:5000/graphql",
+        url: "http://54.39.98.125:5000/graphql",
         data: {
             query: print(CREATE_CHAT_MSG),
             variables: {
             emisor: this.props.user.id,
-            receptor: this.props.user2.id,
             mensaje: this.state.message,
             fecha: todayDate3
             }
         }
     }).then(res =>{
-        console.log(res.data.data.createChat);
+        console.log(res.data.data.createChat.mensaje);
+        axios({
+            method: "POST",
+            url: "http://54.39.98.125:5000/graphql",
+            data: {
+                query: print(CREATE_NOTIFICATION),
+                variables: {
+                    message: this.state.message,
+                    sender_id: this.props.user.id,
+                    chat_id: 1,
+                    users: [1]
+                }
+            }
+        })
     });
-    
     myFirestore.collection('chat').add({
         'text': this.state.message,
         'from': this.props.user.username,
-        'to': this.props.user2.username,
         'date': todayDate3
     })
 
@@ -123,7 +157,7 @@ class Chatroom extends Component {
                     <Col>
                             <Card body bg="dark" text="white">
                                 <Card body bg="dark" text="white">
-                                    En 
+                                    {this.props.user.username}
                                 </Card>
                                 <Card body bg="dark" text="white">
                                     Desarrollo
@@ -141,6 +175,7 @@ class Chatroom extends Component {
                                 <FormControl onChange={this.handleChange} as="textarea" aria-label="With textarea" />
                                 <InputGroup.Append>
                                     <Button variant="outline-secondary" onClick={this.handleSubmit}>Enviar</Button>
+                                    <Button variant="outline-secondary" onClick={this.debug}>Debug</Button>
                                 </InputGroup.Append>
                             </InputGroup>
                             </Card>

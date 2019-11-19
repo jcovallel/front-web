@@ -5,7 +5,7 @@ import './All.css';
 import './Login.css';
 import axios from 'axios';
 import {connect} from "react-redux"
-import {saveuser} from "../Redux/ActionCreators";
+import {saveuser, savejwt} from "../Redux/ActionCreators";
 import { print } from "graphql";
 import gql from "graphql-tag";
 
@@ -35,6 +35,19 @@ class Home extends Component {
           )
         }
       `;
+        const GET_USER = gql`
+        query userByUsername(
+            $username: String!
+        ){
+            userByUsername(
+                username: $username
+            ){
+                id
+                username
+                mail
+            }
+        }
+        `
         axios({
             method: "POST",
             url: "http://54.39.98.125:5000/graphql",
@@ -45,20 +58,23 @@ class Home extends Component {
                 password: this.state.password
               }
             }
-        });
-        axios({
-            method: "GET",
-            url: "http://54.39.98.125:4002/users/findByUsername?username=" + this.state.username,
-        }).then(res=>{
-            console.log(res.data);
-            this.props.saveuser(res.data);
-        });
-        axios({
-            method: "GET",
-            url: "http://54.39.98.125:3000/api/signin/" + this.state.username + "/" + this.state.password,
-        }).then(res=>{
-            console.log(res);
-            this.props.history.push('/chatroom');
+        }).then(res => {
+            console.log("Breeee")
+            this.props.savejwt(res.data.data.signin);
+            axios({
+                method: "POST",
+                url: "http://54.39.98.125:5000/graphql",
+                data:{
+                    query: print(GET_USER),
+                    variables:{
+                        username: this.state.username
+                    }
+                }
+            }).then(res=>{
+                console.log("Bree")
+                this.props.saveuser(res.data.data.userByUsername);
+                this.props.history.push('/chatroom');
+            })
         }).catch(res =>{
             console.log(res);
             this.props.history.push('/register');
@@ -131,6 +147,9 @@ const mapDispatchToProps = dispatch =>{
     return{
         saveuser(user){
             dispatch(saveuser(user))
+        },
+        savejwt(jwt){
+            dispatch(savejwt(jwt))
         }
     };
 };

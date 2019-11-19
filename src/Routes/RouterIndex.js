@@ -16,7 +16,7 @@ export default class RouterIndex extends Component {
                 <Route path="/home" exact component={Home}/>
                 <Route path="/register" exact component={Register}/>
                 <Route path="/chats" exact component={Chats}/>
-                <Route path="/chatroom/:id" exact component ={Chatroom}/>
+                <Route path="/chatroom" exact component ={Chatroom}/>
             </div>
         );
     }

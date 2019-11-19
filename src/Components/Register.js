@@ -43,12 +43,12 @@ class Register extends Component {
         e.preventDefault();
         const CREATE_USER_USERS = gql`
         mutation createUser(
-          $username: String!
-          $password: String!
-          $mail: String!
-          $verification: Boolean!
-          $active: Boolean!
-          $password_confirmation: String!
+            $username: String!
+            $password: String!
+            $mail: String!
+            $verification: Boolean!
+            $active: Boolean!
+            $password_confirmation: String!
         ) {
           createUser(
             user: {
@@ -61,12 +61,25 @@ class Register extends Component {
             }
           ){
               username
+           }
           }
-        }
-      `;
+        `;
+        const CREATE_USER_AUTH = gql`
+        mutation createAuthUser(
+            $userName: String!
+            $password: String!
+        ){
+            createAuthUser(
+                user:{
+                    userName: $userName
+                    password: $password
+                }
+            )
+         }
+        `;
         axios({
             method: "POST",
-            url: "http://localhost:5000/graphql",
+            url: "http://54.39.98.125:5000/graphql",
             data: {
               query: print(CREATE_USER_USERS),
               variables: {
@@ -84,10 +97,16 @@ class Register extends Component {
         });
         axios({
             method: "POST",
-            url: "http://172.17.0.1:3000/signup/" + this.state.username + "/" + this.state.password
+            url: "http://54.39.98.125:5000/graphql",
+            data:{
+                query: print(CREATE_USER_AUTH),
+                variables: {
+                    userName: this.state.username,
+                    password: this.state.password
+                }
+            }
         }).then(res=>{
-            console.log("yea maracuyea"+res.data)
-            this.props.history.push('/chats');
+            this.props.history.push('/home');
         })
     }
 

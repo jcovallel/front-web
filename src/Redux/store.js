@@ -4,7 +4,8 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 const initialState = {
     user: "",
     username: "",
-    user2: ""
+    user2: "",
+    jwt: ""
 };
 
 const reducer = (state=initialState, action) => {
@@ -38,9 +39,19 @@ const reducer = (state=initialState, action) => {
             ...state,
             user2: ""
         }
+    } else if (action.type === "SAVEJWT"){
+        return{
+            ...state,
+            jwt: action.jwt
+        }
+    } else if (action.type === "DELETEJWT"){
+        return{
+            ...state,
+            jwt: ""
+        }
     }
     return state;
 };
 
 
-export default createStore(reducer, {user: "", username: "", user2: ""}, composeWithDevTools(applyMiddleware(), persistState()));
+export default createStore(reducer, {user: "", username: "", user2: "", jwt: ""}, composeWithDevTools(applyMiddleware(), persistState()));
