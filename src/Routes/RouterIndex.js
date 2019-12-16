@@ -11,7 +11,7 @@ export default class RouterIndex extends Component {
 
     render(){
         return (
-            <div>
+            <div style={{height : '100vh'}}>
                 <Route path="/" exact component={Home}/>
                 <Route path="/home" exact component={Home}/>
                 <Route path="/register" exact component={Register}/>

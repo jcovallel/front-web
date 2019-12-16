@@ -19,7 +19,6 @@
   justify-content: center;
   font-size: calc(7px + 2vmin);
   color: black;
-  padding: 25px;
 }
 .Footerr{
   display: inline-block;
@@ -29,4 +28,18 @@
 
 .Background{
   background-color: #282c34;
+  /*background-image: linear-gradient(to bottom, red, red 50%, white 50%);
+  background-attachment:fixed;
+  background-repeat: no-repeat;*/
+}
+
+body::before {
+  height: 50%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #128ff2;
+  content: "";
+  z-index: 0;
 }
