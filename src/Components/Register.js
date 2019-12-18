@@ -79,7 +79,7 @@ class Register extends Component {
         `;
         axios({
             method: "POST",
-            url: "http://54.39.98.125:5000/graphql",
+            url: "http://34.68.231.167:8080/graphql",
             data: {
               query: print(CREATE_USER_USERS),
               variables: {
@@ -97,7 +97,7 @@ class Register extends Component {
         });
         axios({
             method: "POST",
-            url: "http://54.39.98.125:5000/graphql",
+            url: "http://34.68.231.167:8080/graphql",
             data:{
                 query: print(CREATE_USER_AUTH),
                 variables: {
