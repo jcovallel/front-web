@@ -9,9 +9,10 @@ COPY package.json /app/package.json
 RUN npm install --silent
 RUN npm install react-scripts@3.0.1 -g --silent
 
+ADD . /app
+VOLUME /app /app/node_modules
 CMD ["npm", "start"]
 
 EXPOSE 3000
 
-VOLUME .:/app /app/node_modules
 
