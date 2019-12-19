@@ -50,7 +50,7 @@ class Home extends Component {
         `
         axios({
             method: "POST",
-            url: "http://34.68.231.167:8080/graphql",
+            url: "http://pugchat-proxy:80/graphql",
             data: {
               query: print(LOG_USER_AUTH),
               variables: {
@@ -63,7 +63,7 @@ class Home extends Component {
             this.props.savejwt(res.data.data.signin);
             axios({
                 method: "POST",
-                url: "http://34.68.231.167:8080/graphql",
+                url: "http://pugchat-proxy:80/graphql",
                 data:{
                     query: print(GET_USER),
                     variables:{
