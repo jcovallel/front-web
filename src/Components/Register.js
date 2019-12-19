@@ -79,7 +79,7 @@ class Register extends Component {
         `;
         axios({
             method: "POST",
-            url: "http://pugchat-proxy:80/graphql",
+            url: "http://35.232.36.229:8080/graphql",
             data: {
               query: print(CREATE_USER_USERS),
               variables: {
@@ -97,7 +97,7 @@ class Register extends Component {
         });
         axios({
             method: "POST",
-            url: "http://pugchat-proxy:80/graphql",
+            url: "http://35.232.36.229:8080/graphql",
             data:{
                 query: print(CREATE_USER_AUTH),
                 variables: {

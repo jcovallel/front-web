@@ -167,7 +167,7 @@ class Chatroom extends Component {
         `
     axios({
         method: "POST",
-        url: "http://pugchat-proxy:80/graphql",
+        url: "http://35.232.36.229:8080/graphql",
         data: {
             query: print(CREATE_CHAT_MSG),
             variables: {
@@ -179,7 +179,7 @@ class Chatroom extends Component {
     }).then(res =>{
         axios({
             method: "POST",
-            url: "http://pugchat-proxy:80/graphql",
+            url: "http://35.232.36.229:8080/graphql",
             data: {
                 query: print(CREATE_NOTIFICATION),
                 variables: {
