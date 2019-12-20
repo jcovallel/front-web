@@ -50,7 +50,7 @@ class Home extends Component {
         `
         axios({
             method: "POST",
-            url: "http://35.232.36.229:8080/graphql",
+            url: "http://proxybalance.default.10.128.0.16.xip.io/graphql",
             data: {
               query: print(LOG_USER_AUTH),
               variables: {
@@ -63,7 +63,7 @@ class Home extends Component {
             this.props.savejwt(res.data.data.signin);
             axios({
                 method: "POST",
-                url: "http://35.232.36.229:8080/graphql",
+                url: "http://proxybalance.default.10.128.0.16.xip.io/graphql",
                 data:{
                     query: print(GET_USER),
                     variables:{
