@@ -167,7 +167,7 @@ class Chatroom extends Component {
         `
     axios({
         method: "POST",
-        url: "http://proxybalance.default.10.128.0.16.xip.io/graphql",
+        url: "http://proxybalance.default.10.128.0.29.xip.io/graphql",
         data: {
             query: print(CREATE_CHAT_MSG),
             variables: {
@@ -179,7 +179,7 @@ class Chatroom extends Component {
     }).then(res =>{
         axios({
             method: "POST",
-            url: "http://proxybalance.default.10.128.0.16.xip.io/graphql",
+            url: "http://proxybalance.default.10.128.0.29.xip.io/graphql",
             data: {
                 query: print(CREATE_NOTIFICATION),
                 variables: {

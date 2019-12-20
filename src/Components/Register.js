@@ -79,7 +79,7 @@ class Register extends Component {
         `;
         axios({
             method: "POST",
-            url: "http://proxybalance.default.10.128.0.16.xip.io/graphql",
+            url: "http://proxybalance.default.10.128.0.29.xip.io/graphql",
             data: {
               query: print(CREATE_USER_USERS),
               variables: {
@@ -97,7 +97,7 @@ class Register extends Component {
         });
         axios({
             method: "POST",
-            url: "http://proxybalance.default.10.128.0.16.xip.io/graphql",
+            url: "http://proxybalance.default.10.128.0.29.xip.io/graphql",
             data:{
                 query: print(CREATE_USER_AUTH),
                 variables: {
